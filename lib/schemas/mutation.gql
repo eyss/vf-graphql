@@ -911,11 +911,61 @@ type ScenarioDefinitionResponse {
   scenarioDefinition: ScenarioDefinition
 }
 
+##########################################################
+# Proposal layer                                         #
+##########################################################
 
 
+input ProposalCreateParams{
+  name: String
+  hasBeginning: DateTime
+  hasEnd: DateTime
+  inScopeOf: [AnyType!]
+  unitBased: Boolean
+  created: DateTime
+  note: String
+}
 
+input ProposalUpdateParams{
+  id: ID!
+  name: String
+  hasBeginning: DateTime
+  hasEnd: DateTime
+  inScopeOf: [AnyType!]
+  unitBased: Boolean
+  created: DateTime
+  note: String
+}
 
+type ProposalResponse{
+  proposal: Proposal
+}
 
+input ProposedToCreateParams{
+  proposedTo: Agent!
+}
+
+input ProposedToUpdateParams{
+  id: ID!
+  proposedTo: Agent!
+}
+
+type ProposedToResponse{
+  proposedTo: ProposedTo
+}
+
+input ProposedIntentCreateParams{
+  reciprocal: Boolean
+}
+
+input ProposedIntentUpdateParams{
+  id: ID!
+  reciprocal: Boolean
+}
+
+type ProposedIntentResponse{
+  proposedIntent: ProposedIntent
+}
 
 ################################################################################
 # MAIN MUTATIONS ENTRYPOINT                                                    #
@@ -979,6 +1029,20 @@ type Mutation {
   createSatisfaction(satisfaction: SatisfactionCreateParams): SatisfactionResponse
   updateSatisfaction(satisfaction: SatisfactionUpdateParams): SatisfactionResponse # TODO: add EconomicEvent
   deleteSatisfaction(id: String!): Boolean
+
+  # Proposal layer
+  
+  createProposal(proposal: ProposalCreateParams): ProposalResponse
+  updateProposal(proposal: ProposalUpdateParams): ProposalResponse
+  deleteProposal(id: String!): Boolean
+
+  createProposedTo(proposedTo: ProposedToCreateParams): ProposedToResponse
+  updateProposedTo(proposedTo: ProposedToUpdateParams): ProposedToResponse
+  deleteProposedTo(id: String!): Boolean
+  
+  createProposedIntent(proposedIntent: ProposedIntentCreateParams): ProposedIntentResponse
+  updateProposedIntent(proposedIntent: ProposedIntentUpdateParams): ProposedIntentResponse
+  deleteProposedIntent(id: String!): Boolean
 
   createPlan(plan: PlanCreateParams!): PlanResponse
   # createPlanFromRecipe(): PlanResponse
